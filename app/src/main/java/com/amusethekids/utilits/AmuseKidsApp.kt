@@ -4,7 +4,6 @@ import android.app.Application
 import com.amusethekids.koin.appComponent
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 
 
 class AmuseKidsApp : Application() {
@@ -17,11 +16,7 @@ class AmuseKidsApp : Application() {
     private fun initKoin() {
         startKoin {
             androidContext(this@AmuseKidsApp)
-            modules(createModules())
+            modules(appComponent)
         }
-    }
-
-    fun createModules(): List<Module> {
-        return appComponent
     }
 }

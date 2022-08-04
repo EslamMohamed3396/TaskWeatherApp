@@ -1,4 +1,4 @@
-package com.amusethekids.ui.fragments.auth
+package com.amusethekids.ui.fragments.auth.login
 
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LiveData
@@ -16,22 +16,25 @@ class LoginViewModel : BaseViewModel() {
         return EditTextValidiation.validName(textInputLayout)
     }
 
-    fun watcher(textInputLayout: TextInputLayout) {
+    private fun validPassword(textInputLayout: TextInputLayout): Boolean {
+        return EditTextValidiation.validUserName(textInputLayout)
+    }
+
+    fun watcherName(textInputLayout: TextInputLayout) {
         textInputLayout.editText?.doOnTextChanged { text, start, before, count ->
             validName(textInputLayout)
         }
     }
 
-    fun checkValidity(textInputLayout: TextInputLayout) {
-        if (addValidityList(textInputLayout).contains(false)) return
+    fun watcherPassword(textInputLayout: TextInputLayout) {
+        textInputLayout.editText?.doOnTextChanged { text, start, before, count ->
+            validPassword(textInputLayout)
+        }
+    }
+
+    fun checkValidity(name: TextInputLayout, password: TextInputLayout) {
+        if (!validName(name) || !validName(password)) return
         _validity.postValue(Unit)
     }
-
-    private fun addValidityList(textInputLayout: TextInputLayout): ArrayList<Boolean> {
-        val listChecks = ArrayList<Boolean>()
-        listChecks.add(validName(textInputLayout))
-        return listChecks
-    }
-
 
 }

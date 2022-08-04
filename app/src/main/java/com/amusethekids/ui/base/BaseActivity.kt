@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     private var _binding: T? = null
-    protected val binding get() = _binding
+    protected val binding get() = _binding!!
 
     override fun onDestroy() {
         super.onDestroy()
@@ -19,15 +19,17 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _binding = getViewBinding(layoutInflater)
+        setContentView(_binding?.root)
         onCreateInit()
-       // initViewModel()
+        // initViewModel()
         initClicks()
     }
 
 
     protected abstract fun initClicks()
 
-  //  protected abstract fun initViewModel()
+    //  protected abstract fun initViewModel()
 
     protected abstract fun onCreateInit()
 

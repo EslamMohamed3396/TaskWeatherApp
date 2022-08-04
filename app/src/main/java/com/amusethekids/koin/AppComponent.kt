@@ -6,20 +6,31 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.amusethekids.ui.fragments.auth.login.LoginViewModel
+import com.amusethekids.ui.fragments.splash.SplashViewModel
 import com.amusethekids.utilits.UserPreferences
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.Module
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
 // setup Koin
-val appComponent = provideAppComponent()
 
 
-val AuthenticationModule = module {
+val SharedPreferencesModule = module {
     single(named("userPreferences")) { provideUserPreferences(androidContext()) }
     factory { UserPreferences(get(named("userPreferences")), get()) }
+}
+
+
+val AuthViewModel = module {
+    viewModel { LoginViewModel() }
+}
+
+
+val SplashViewModel = module {
+    viewModel { SplashViewModel(get()) }
 }
 
 fun provideUserPreferences(context: Context): SharedPreferences {
@@ -51,11 +62,13 @@ fun provideEncryptedPreference(context: Context, name: String): SharedPreference
 }
 
 
-fun provideAppComponent(): List<Module> {
+val appComponent = module {
     val component = mutableListOf(
-        AuthenticationModule,
+        SharedPreferencesModule,
+        AuthViewModel,
+        SplashViewModel
     )
-
     component.addAll(networkComponent)
-    return component
+    includes(component)
+
 }

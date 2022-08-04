@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VDB : ViewBinding> : Fragment() {
     private var _binding: VDB? = null
-    protected val binding get() = _binding
+    protected val binding get() = _binding!!
     //  protected val sharedViewModel: SharedViewModel by activityViewModels()
 
 
@@ -20,7 +20,7 @@ abstract class BaseFragment<VDB : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = getViewBinding(inflater, container)
-        return _binding?.root
+        return _binding!!.root
     }
 
     protected abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VDB
@@ -45,8 +45,8 @@ abstract class BaseFragment<VDB : ViewBinding> : Fragment() {
 //        snackBar.show()
 //    }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }
