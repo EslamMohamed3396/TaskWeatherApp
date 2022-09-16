@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Eslam/Documents/GitHub/WeatherAppTask/app/src/main/res/layout/fragment_splash.xml" value="0.1734375" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/WeatherAppTask/app/src/main/res/drawable/background_color_gradient.xml" value="0.1" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/WeatherAppTask/app/src/main/res/drawable/splash.xml" value="0.1" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/WeatherAppTask/app/src/main/res/layout/fragment_splash.xml" value="0.12" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/baseProject/newProject/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/baseProject/newProject/app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/baseProject/newProject/app/src/main/res/layout/fragment_splash.xml" value="0.1734375" />
