@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 abstract class BaseFragment<VDB : ViewBinding> : Fragment() {
     private var _binding: VDB? = null
     protected val binding get() = _binding!!
-    //  protected val sharedViewModel: SharedViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -38,12 +38,10 @@ abstract class BaseFragment<VDB : ViewBinding> : Fragment() {
 
     protected abstract fun onCreateInit()
 
-//    fun showSnackbar(message: String?) {
-//        val snackBar = Snackbar.make(_binding.root, message!!, Snackbar.LENGTH_SHORT)
-//        //  snackBar.setTextColor(binding.root.context.resources.getColor(R.color.white))
-//        //  snackBar.anchorView = (activity as MainActivity).binding.bottomNavigation
-//        snackBar.show()
-//    }
+    fun showSnackbar(message: String?) {
+        val snackBar = Snackbar.make(_binding?.root!!, message!!, Snackbar.LENGTH_SHORT)
+        snackBar.show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

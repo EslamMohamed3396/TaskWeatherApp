@@ -22,22 +22,13 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         _binding = getViewBinding(layoutInflater)
         setContentView(_binding?.root)
         onCreateInit()
-        // initViewModel()
         initClicks()
     }
 
 
     protected abstract fun initClicks()
 
-    //  protected abstract fun initViewModel()
-
     protected abstract fun onCreateInit()
 
-//    fun showSnackbar(message: String?) {
-//        val snackBar = Snackbar.make(_binding.root, message!!, Snackbar.LENGTH_SHORT)
-//        //  snackBar.setTextColor(binding.root.context.resources.getColor(R.color.white))
-//        //  snackBar.anchorView = (activity as MainActivity).binding.bottomNavigation
-//        snackBar.show()
-//    }
 
 }
