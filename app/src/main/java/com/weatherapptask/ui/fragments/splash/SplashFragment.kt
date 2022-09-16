@@ -3,11 +3,10 @@ package com.weatherapptask.ui.fragments.splash
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.weatherapptask.R
 import com.weatherapptask.databinding.FragmentSplashBinding
 import com.weatherapptask.ui.base.BaseFragment
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
@@ -24,33 +23,23 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     }
 
     override fun initViewModel() {
-        delayTwoSecondThenCallViewModel()
-        listenToSignIn()
-        listenToSignOut()
+        listnerGoToHome()
+        initViewModelGoToHome()
     }
 
     override fun onCreateInit() {
-
     }
 
-    private fun delayTwoSecondThenCallViewModel() {
-        lifecycleScope.launch {
-            delay(30000)
-            viewModel.isUserSignIn()
-            viewModel.isUserNotLogin()
+
+    private fun listnerGoToHome() {
+        viewModel.goToHome.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
     }
 
-    private fun listenToSignIn() {
-        viewModel.isUserSignIn.observe(viewLifecycleOwner) {
 
-        }
-    }
-
-    private fun listenToSignOut() {
-        viewModel.isUserNotLogin.observe(viewLifecycleOwner) {
-
-        }
+    private fun initViewModelGoToHome() {
+        viewModel.goToHome()
     }
 
 }

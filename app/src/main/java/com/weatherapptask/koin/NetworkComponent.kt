@@ -3,7 +3,10 @@ package com.weatherapptask.koin
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.weatherapptask.BuildConfig
-import com.weatherapptask.network.interceptors.AuthTokenInterceptor
+import com.weatherapptask.network.search.SearchApi
+import com.weatherapptask.network.search.SearchRepository
+import com.weatherapptask.network.weatherForcast.WeatherApi
+import com.weatherapptask.network.weatherForcast.WeatherForecastRepository
 import com.weatherapptask.utilits.checkNetwork.AppConnectionMonitor
 import com.weatherapptask.utilits.checkNetwork.ConnectionMonitor
 import com.weatherapptask.utilits.checkNetwork.ConnectivityInterceptor
@@ -24,13 +27,11 @@ val ConnectionMonitorModule = module {
 
 val InterceptorModule = module {
     factory { ConnectivityInterceptor(get(), get()) }
-    factory { AuthTokenInterceptor(get()) }
-//    factory { LogoutInterceptor(get(), get(), get()) }
 }
 
 val OkHttpModule = module {
     factory { provideGson() }
-    single(named("BaseHttpClient")) { provideBaseHttpClient(get(), get()) }
+    single(named("BaseHttpClient")) { provideBaseHttpClient(get()) }
 }
 
 val RetrofitModule = module {
@@ -38,6 +39,23 @@ val RetrofitModule = module {
         provideConsumerRetrofit(get(named("BaseHttpClient")), get())
     }
 }
+
+val WeatherForcastApiModule = module {
+    factory { provideWeatherForeCastApi(get(named("BaseRetrofit"))) }
+    factory { WeatherForecastRepository.create(get()) }
+}
+val WSearchApiModule = module {
+    factory { provideSearchApi(get(named("BaseRetrofit"))) }
+    factory { SearchRepository.create(get()) }
+}
+
+fun provideWeatherForeCastApi(manager: Retrofit): WeatherApi =
+    manager.create(WeatherApi::class.java)
+
+
+fun provideSearchApi(manager: Retrofit): SearchApi =
+    manager.create(SearchApi::class.java)
+
 
 fun provideGson(): Gson {
     return GsonBuilder()
@@ -60,11 +78,9 @@ fun provideConsumerRetrofit(
 
 fun provideBaseHttpClient(
     connectivityInterceptor: ConnectivityInterceptor,
-    authTokenInterceptor: AuthTokenInterceptor,
 ): OkHttpClient {
     val clientBuilder = OkHttpClient.Builder()
         .addInterceptor(connectivityInterceptor)
-        .addInterceptor(authTokenInterceptor)
     if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -79,7 +95,9 @@ val networkComponent = listOf(
     InterceptorModule,
     OkHttpModule,
     ConnectionMonitorModule,
-    RetrofitModule
+    RetrofitModule,
+    WeatherForcastApiModule,
+    WSearchApiModule
 )
 
 

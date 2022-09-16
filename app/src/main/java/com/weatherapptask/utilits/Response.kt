@@ -1,5 +1,9 @@
 package com.weatherapptask.utilits
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.weatherapptask.network.responseError.ResponseError
+
 data class Response<out T>(
     val status: Status,
     val data: T?,
@@ -17,7 +21,7 @@ data class Response<out T>(
         private fun <T> success(data: T): Response<T> =
             Response(status = Status.SUCCESS, data = data, message = null, throwable = null)
 
-        private fun <T> error(
+        fun <T> error(
             error: Throwable?,
             message: String?,
             responseCode: Int = 0
@@ -38,11 +42,15 @@ data class Response<out T>(
         ): Response<T> {
             return try {
                 val response = getResponse()
-
                 if (response.isSuccessful && response.body() != null)
                     onSuccess(response.body()!!)
-                else
-                    onFailure(error(null, response.errorBody()?.toString()))
+                else {
+                    val gson = Gson()
+                    val type = object : TypeToken<ResponseError>() {}.type
+                    val errorResponse: ResponseError? =
+                        gson.fromJson(response.errorBody()?.charStream(), type)
+                    onFailure(error(null, errorResponse?.error?.message))
+                }
             } catch (t: Throwable) {
                 onFailure(error(t, null))
             }

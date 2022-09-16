@@ -19,8 +19,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun navController() {
-        supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-            ?: return
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
     }
 }

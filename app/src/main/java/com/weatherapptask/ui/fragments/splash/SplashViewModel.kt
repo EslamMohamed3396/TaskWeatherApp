@@ -12,7 +12,7 @@ class SplashViewModel : BaseViewModel() {
     private val _goToHome = SingleLiveData<Unit>()
     val goToHome: LiveData<Unit> get() = _goToHome
 
-    fun isUserSignIn() {
+    fun goToHome() {
         viewModelScope.launch {
             delay(3000)
             _goToHome.value = Unit

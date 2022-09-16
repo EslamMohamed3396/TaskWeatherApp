@@ -7,7 +7,7 @@ plugins {
 }
 
 ext {
-    koin_version= "3.2.0"
+    koin_version= '3.2.1'
     navigation_version = '2.5.2'
     okhttp_version = '5.0.0-alpha.3'
     retrofit_version = "2.9.0"

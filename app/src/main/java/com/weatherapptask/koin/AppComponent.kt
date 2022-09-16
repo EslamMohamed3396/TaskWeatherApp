@@ -1,6 +1,7 @@
 package com.weatherapptask.koin
 
 
+import com.weatherapptask.ui.fragments.home.HomeViewModel
 import com.weatherapptask.ui.fragments.splash.SplashViewModel
 
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,9 +15,14 @@ val SplashViewModel = module {
     viewModel { SplashViewModel() }
 }
 
+val HomeViewModel = module {
+    viewModel { HomeViewModel(get(), get()) }
+}
+
 val appComponent = module {
     val component = mutableListOf(
-        SplashViewModel
+        SplashViewModel,
+        HomeViewModel
     )
     component.addAll(networkComponent)
     includes(component)

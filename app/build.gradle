@@ -5,17 +5,18 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
+
 def baseUrlPropertiesFile = rootProject.file("api.properties")
 def baseUrlProps = new Properties()
 baseUrlProps.load(new FileInputStream(baseUrlPropertiesFile))
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.weatherapptask"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -31,17 +32,10 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        create("dev") {
-            dimension = "version"
-            versionNameSuffix = "-dev"
-            applicationIdSuffix ".dev"
-            buildConfigField ("String", "BASE_SERVER_URL", "\"${baseUrlProps['BASE_URL_PROD']}\"")
-        }
         create("prod") {
             dimension = "version"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
             buildConfigField ("String", "BASE_SERVER_URL", "\"${baseUrlProps['BASE_URL_PROD']}\"")
+            buildConfigField ("String", "KEY", "\"${baseUrlProps['KEY']}\"")
         }
     }
 
@@ -55,6 +49,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildToolsVersion '30.0.2'
 
 }
 
@@ -83,7 +78,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'com.airbnb.android:lottie:5.2.0'
-    implementation("io.coil-kt:coil:2.1.0")
+    implementation('io.coil-kt:coil:2.2.1')
 }
