@@ -1,6 +1,5 @@
 package com.weatherapptask.network.interceptors
 
-import com.weatherapptask.utilits.UserPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
 

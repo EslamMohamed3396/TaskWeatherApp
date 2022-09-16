@@ -1,28 +1,23 @@
 package com.weatherapptask.ui.fragments.splash
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.weatherapptask.ui.base.BaseViewModel
 import com.weatherapptask.utilits.SingleLiveData
-import com.weatherapptask.utilits.UserPreferences
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class SplashViewModel(val sharedPreferences: UserPreferences) : BaseViewModel() {
+class SplashViewModel : BaseViewModel() {
 
-    private val _isUserSignIn = SingleLiveData<Unit>()
-    val isUserSignIn: LiveData<Unit> get() = _isUserSignIn
-
-
-    private val _isUserNotLogin = SingleLiveData<Unit>()
-    val isUserNotLogin: LiveData<Unit> get() = _isUserNotLogin
-
+    private val _goToHome = SingleLiveData<Unit>()
+    val goToHome: LiveData<Unit> get() = _goToHome
 
     fun isUserSignIn() {
-        if (!sharedPreferences.getBool("")) return
-        _isUserSignIn.postValue(Unit)
-    }
+        viewModelScope.launch {
+            delay(3000)
+            _goToHome.value = Unit
+        }
 
-    fun isUserNotLogin() {
-        if (!sharedPreferences.getBool("")) return
-        _isUserNotLogin.postValue(Unit)
     }
 
 }

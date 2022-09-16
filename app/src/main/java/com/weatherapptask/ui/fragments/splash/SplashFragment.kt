@@ -35,7 +35,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private fun delayTwoSecondThenCallViewModel() {
         lifecycleScope.launch {
-            delay(20000)
+            delay(30000)
             viewModel.isUserSignIn()
             viewModel.isUserNotLogin()
         }

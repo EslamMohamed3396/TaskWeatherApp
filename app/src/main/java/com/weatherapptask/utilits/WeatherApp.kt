@@ -6,7 +6,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 
-class AmuseKidsApp : Application() {
+class WeatherApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -15,7 +15,7 @@ class AmuseKidsApp : Application() {
 
     private fun initKoin() {
         startKoin {
-            androidContext(this@AmuseKidsApp)
+            androidContext(this@WeatherApp)
             modules(appComponent)
         }
     }
