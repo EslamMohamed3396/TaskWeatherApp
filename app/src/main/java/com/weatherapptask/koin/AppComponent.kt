@@ -16,7 +16,7 @@ val SplashViewModel = module {
 }
 
 val HomeViewModel = module {
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get()) }
 }
 
 val appComponent = module {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weatherapptask.databinding.ItemWeatherForThreeDaysBinding
 import com.weatherapptask.network.weatherForcast.model.response.Forecastday
 import com.weatherapptask.ui.base.BaseViewHolder
+import com.weatherapptask.utilits.Constant
 import com.weatherapptask.utilits.loadImage
 import com.weatherapptask.utilits.whichDay
 
@@ -29,6 +30,10 @@ class WeatherCastAdapter :
 
     }
 
+    fun clickOnConvertUnit() {
+        notifyDataSetChanged()
+    }
+
     fun submitList(data: List<Forecastday?>?) {
         differ.submitList(data)
     }
@@ -46,8 +51,18 @@ class WeatherCastAdapter :
     inner class ItemWeatherCastViewHolder(val binding: ItemWeatherForThreeDaysBinding) :
         BaseViewHolder<Forecastday>(binding) {
         override fun bind(item: Forecastday) {
+            item.isFTemp = Constant.CONVERT_UNIT.IS_FAHRENHEIT_TEMPERATURE
+            when (item.isFTemp) {
+                true -> {
+                    binding.tvDegree.text = "${item.day?.mintempF}°/${item.day?.maxtempF}°F"
+                }
+                false -> {
+                    binding.tvDegree.text = "${item.day?.mintempC}°/${item.day?.maxtempC}°C"
+                }
+            }
+
             binding.imIcon.loadImage(item.day?.condition?.icon)
-            binding.tvDegree.text = "${item.day?.mintempF}°/${item.day?.maxtempF}°F"
+
             binding.tvDate.text = whichDay(item.date!!)
         }
     }

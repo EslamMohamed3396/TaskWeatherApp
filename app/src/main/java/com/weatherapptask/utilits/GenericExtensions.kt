@@ -1,13 +1,9 @@
 package com.weatherapptask.utilits
 
-import android.widget.EditText
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.widget.ImageView
-import androidx.core.widget.doOnTextChanged
 import coil.load
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.onCompletion
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -91,15 +87,11 @@ fun ImageView.loadImage(url: String?) {
 }
 
 
-fun EditText.textChanges(): Flow<CharSequence?> {
-    return callbackFlow {
-        val listener = doOnTextChanged { text, start: Int, before: Int, count: Int ->
-
-            if (count > 0 && text.toString().isNotEmpty()) {
-                trySend(text)
-            }
-        }
-        awaitClose { removeTextChangedListener(listener) }
-    }.onCompletion { emit(text) }
+fun ImageView.imageBitmap(base64: String?) {
+    if (base64 != null) {
+        val data = Base64.decode(base64, Base64.DEFAULT)
+        val decodedByte = BitmapFactory.decodeByteArray(data, 0, data.size)
+        load(decodedByte)
+    }
 }
 

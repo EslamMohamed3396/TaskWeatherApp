@@ -16,5 +16,7 @@ data class Forecastday(
     @SerializedName("day")
     val day: Day?,
     @SerializedName("hour")
-    val hour: List<Hour>?
+    val hour: List<Hour>?,
+
+    var isFTemp: Boolean = true
 ) : Parcelable

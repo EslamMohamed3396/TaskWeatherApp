@@ -8,6 +8,7 @@ import com.weatherapptask.ui.base.BaseActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
+
     override fun getViewBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun initClicks() {

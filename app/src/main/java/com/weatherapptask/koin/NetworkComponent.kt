@@ -3,12 +3,9 @@ package com.weatherapptask.koin
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.weatherapptask.BuildConfig
-import com.weatherapptask.network.search.SearchApi
-import com.weatherapptask.network.search.SearchRepository
 import com.weatherapptask.network.weatherForcast.WeatherApi
 import com.weatherapptask.network.weatherForcast.WeatherForecastRepository
 import com.weatherapptask.utilits.checkNetwork.AppConnectionMonitor
-import com.weatherapptask.utilits.checkNetwork.ConnectionMonitor
 import com.weatherapptask.utilits.checkNetwork.ConnectivityInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 
 val ConnectionMonitorModule = module {
-    single { AppConnectionMonitor(get()) as ConnectionMonitor }
+    single { AppConnectionMonitor(get()) }
 
 }
 
@@ -44,17 +41,10 @@ val WeatherForcastApiModule = module {
     factory { provideWeatherForeCastApi(get(named("BaseRetrofit"))) }
     factory { WeatherForecastRepository.create(get()) }
 }
-val WSearchApiModule = module {
-    factory { provideSearchApi(get(named("BaseRetrofit"))) }
-    factory { SearchRepository.create(get()) }
-}
 
 fun provideWeatherForeCastApi(manager: Retrofit): WeatherApi =
     manager.create(WeatherApi::class.java)
 
-
-fun provideSearchApi(manager: Retrofit): SearchApi =
-    manager.create(SearchApi::class.java)
 
 
 fun provideGson(): Gson {
@@ -97,7 +87,6 @@ val networkComponent = listOf(
     ConnectionMonitorModule,
     RetrofitModule,
     WeatherForcastApiModule,
-    WSearchApiModule
 )
 
 
